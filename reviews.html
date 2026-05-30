@@ -1,109 +1,186 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Đánh Giá | La Bonita Spa</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/i18n.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đánh Giá | La Bonita Spa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/i18n.js"></script>
 </head>
+
 <body>
 
-<!-- Header -->
-<header class="header header-solid" id="header">
-  <div class="container header-inner">
-    <a href="index.html#home" class="logo">La <span>Bonita</span> Spa</a>
-    <div style="display:flex; align-items:center;">
+  <!-- Topbar -->
+  <div class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="mailto:vtmlabonita@gmail.com" class="topbar-item">
+          <i class="fas fa-envelope"></i>
+          <span>vtmlabonita@gmail.com</span>
+        </a>
+        <a href="https://www.facebook.com/vienthammydanang.labonita?locale=vi_VN" target="_blank" class="topbar-item"
+          rel="noopener">
+          <i class="fab fa-facebook-f"></i>
+          <span>Facebook</span>
+        </a>
+        <a href="https://maps.app.goo.gl/ENbHCGJiAmPr3Faw8" target="_blank" class="topbar-item" rel="noopener">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Chỉ đường</span>
+        </a>
+      </div>
+      <div class="topbar-right">
+        <a href="https://zalo.me/0935801229" target="_blank" class="topbar-hotline" rel="noopener">
+          <span class="zalo-logo-img"><img src="uploads/zalo-logo.png" alt="Zalo" width="16" height="16"
+              loading="lazy"></span>
+          Zalo: 0935 801 229
+        </a>
+        <a href="https://zalo.me/0935801229" target="_blank" class="topbar-btn" rel="noopener">
+          <i class="fas fa-calendar-check"></i> Đặt lịch ngay
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header header-solid" id="header">
+    <div class="container header-inner">
+      <a href="index.html#home" class="logo">La <span>Bonita</span> Spa</a>
+      <div style="display:flex; align-items:center;">
         <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme"><i class="fas fa-moon"></i></button>
         <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
+      </div>
+      <nav class="navbar" id="navbar">
+        <ul>
+          <li><a href="index.html#home" class="nav-link">Trang chủ</a></li>
+          <li><a href="index.html#about" class="nav-link">Giới thiệu</a></li>
+          <li><a href="services.html" class="nav-link">Dịch vụ</a></li>
+          <li><a href="reviews.html" class="nav-link active">Đánh giá</a></li>
+          <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
+        </ul>
+      </nav>
     </div>
-    <nav class="navbar" id="navbar">
-      <ul>
-        <li><a href="index.html#home" class="nav-link">Trang chủ</a></li>
-        <li><a href="index.html#about" class="nav-link">Giới thiệu</a></li>
-        <li><a href="services.html" class="nav-link">Dịch vụ</a></li>
-        <li><a href="gallery.html" class="nav-link">Hình ảnh</a></li>
-        <li><a href="reviews.html" class="nav-link active">Đánh giá</a></li>
-        <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+  </header>
 
-<!-- Testimonials -->
-<section id="testimonials" class="testimonials section-pad bg-alt" style="margin-top: 80px;">
-  <div class="container">
-    <div class="section-header text-center reveal">
-      <span class="section-sub">Phản Hồi Chân Thực</span>
-      <h2 class="section-title">1000+ Khách Hàng Tìm Lại Tự Tin</h2>
-    </div>
-    <div class="testi-grid" id="dyn_reviews_grid">
-      <!-- Injected by script.js -->
-    </div>
-  </div>
-</section>
+  <!-- Testimonials – Premium Minimalist Redesign -->
+  <section id="testimonials" class="rev-section section-pad" style="margin-top: 80px;">
+    <div class="rev-container">
+      <!-- Decorative background quote -->
+      <div class="rev-bg-quote" aria-hidden="true">"</div>
+      <div class="rev-sparkle-1" aria-hidden="true"><i data-lucide="sparkles" class="rev-sparkle-icon"></i></div>
+      <div class="rev-sparkle-2" aria-hidden="true"><i data-lucide="sparkles" class="rev-sparkle-icon"></i></div>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <a href="index.html#home" class="logo footer-logo">La <span>Bonita</span> Spa</a>
-      <p>Nơi khởi nguồn làn da nguyên bản không tỳ vết. Cam kết hiệu quả rõ rệt, an toàn tuyệt đối.</p>
-    </div>
-    <div>
-      <h5>Về Chúng Tôi</h5>
-      <ul><li><a href="index.html#home">Trang chủ</a></li><li><a href="index.html#about">Giới thiệu</a></li><li><a href="gallery.html">Hình ảnh</a></li><li><a href="reviews.html">Đánh giá</a></li></ul>
-    </div>
-    <div>
-      <h5>Dịch Vụ</h5>
-      <ul><li><a href="services.html">Điều trị mụn chuyên sâu</a></li><li><a href="services.html">Phác đồ trị nám</a></li><li><a href="services.html">Mesotherapy</a></li></ul>
-    </div>
-    <div>
-      <h5>Giờ Mở Cửa</h5>
-      <ul class="hours"><li><span>T2 – T6</span><span>8:30 – 20:00</span></li><li><span>T7 – CN</span><span>8:00 – 21:00</span></li></ul>
-    </div>
-  </div>
-  <div class="footer-bottom"><div class="container"><p>&copy; 2026 La Bonita Spa. Thiết kế cao cấp chuyên nghiệp.</p></div></div>
-</footer>
+      <!-- Header -->
+      <div class="rev-header reveal">
+        <span class="rev-sub">PHẢN HỒI CHÂN THỰC</span>
+        <h2 class="rev-title">1000+ Khách Hàng<br>Tìm Lại Tự Tin</h2>
+        <p class="rev-desc">Những chia sẻ thực tế từ khách hàng đã trải nghiệm dịch vụ tại La Bonita Spa.</p>
+      </div>
 
-<!-- Chat Widget -->
-<div class="chat-widget">
-    <a href="https://zalo.me/" target="_blank" class="chat-btn zalo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/2048px-Icon_of_Zalo.svg.png" alt="Zalo"></a>
-    <a href="https://m.me/" target="_blank" class="chat-btn messenger"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Facebook_Messenger_logo_2020.svg/2048px-Facebook_Messenger_logo_2020.svg.png" alt="Messenger"></a>
-    <a href="tel:0988000000" class="chat-btn phone"><i class="fas fa-phone-alt"></i></a>
-</div>
-
-<!-- Booking Modal -->
-<div class="booking-modal-overlay" id="bookingModal">
-    <div class="booking-modal">
-        <div class="modal-close" onclick="closeBookingModal()"><i class="fas fa-times"></i></div>
-        <h3 data-i18n="booking_title">Đặt Lịch Khám</h3>
-        <p data-i18n="booking_desc">Vui lòng để lại thông tin, chuyên viên của chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.</p>
-        <form id="bookingForm" onsubmit="submitBooking(event)">
-            <div class="form-group"><input type="text" id="bk_name" required data-i18n="name_placeholder" placeholder="Họ và tên của bạn"></div>
-            <div class="form-group"><input type="tel" id="bk_phone" required data-i18n="phone_placeholder" placeholder="Số điện thoại"></div>
-            <div class="form-group">
-                <select id="bk_service" required>
-                    <option value="" data-i18n="service_placeholder">Chọn dịch vụ quan tâm</option>
-                    <option value="Mụn" data-i18n="service_acne">Điều trị Mụn</option>
-                    <option value="Nám" data-i18n="service_melasma">Điều trị Nám</option>
-                    <option value="Khác" data-i18n="service_other">Khác</option>
-                </select>
-            </div>
-            <div style="display:flex;gap:15px;">
-                <div class="form-group" style="flex:1;"><input type="date" id="bk_date" required></div>
-                <div class="form-group" style="flex:1;"><input type="time" id="bk_time" required></div>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:10px;" data-i18n="submit_booking">Gửi Yêu Cầu</button>
-        </form>
-        <div id="bookingAlert" class="alert-success" style="display:none;" data-i18n="booking_success">Đặt lịch thành công! Chúng tôi sẽ gọi lại cho bạn sớm nhất.</div>
+      <!-- Reviews Grid -->
+      <div class="rev-grid" id="dyn_reviews_grid">
+        <!-- Injected by script.js -->
+      </div>
     </div>
-</div>
+  </section>
 
-<script src="js/script.js"></script>
+  <!-- Footer Contact Section -->
+  <section class="footer-contact">
+    <div class="container footer-contact-grid">
+      <div class="footer-contact-item">
+        <a href="index.html#home" class="logo">La <span>Bonita</span> Spa</a>
+        <p>Nơi khởi nguồn làn da nguyên bản không tỳ vết. Cam kết hiệu quả rõ rệt, an toàn tuyệt đối.</p>
+        <a href="https://zalo.me/0935801229" target="_blank" class="footer-contact-btn" rel="noopener">
+          <i class="fas fa-calendar-check"></i> Đặt lịch ngay
+        </a>
+      </div>
+      <div class="footer-contact-item">
+        <h5>Liên Hệ</h5>
+        <ul class="footer-contact-list">
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:vtmlabonita@gmail.com">vtmlabonita@gmail.com</a>
+          </li>
+          <li>
+            <i class="fab fa-facebook-f"></i>
+            <a href="https://www.facebook.com/vienthammydanang.labonita?locale=vi_VN" target="_blank"
+              rel="noopener">Facebook</a>
+          </li>
+          <li>
+            <i class="fas fa-map-marker-alt"></i>
+            <a href="https://maps.app.goo.gl/ENbHCGJiAmPr3Faw8" target="_blank" rel="noopener">Google Maps</a>
+          </li>
+          <li>
+            <span class="zalo-logo-img" style="width:18px;height:18px;"><img src="uploads/zalo-logo.png" alt="Zalo"
+                width="18" height="18" loading="lazy"></span>
+            <a href="https://zalo.me/0935801229" target="_blank" rel="noopener">Zalo: 0935801229</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-contact-item">
+        <h5>Về Chúng Tôi</h5>
+        <ul>
+          <li><a href="index.html#home">Trang chủ</a></li>
+          <li><a href="index.html#about">Giới thiệu</a></li>
+          <li><a href="reviews.html">Đánh giá</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact-item">
+        <h5>Dịch Vụ</h5>
+        <ul>
+          <li><a href="services.html">Điều trị mụn chuyên sâu</a></li>
+          <li><a href="services.html">Phác đồ trị nám</a></li>
+          <li><a href="services.html">Mesotherapy</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html#home" class="logo footer-logo">La <span>Bonita</span> Spa</a>
+        <p>Nơi khởi nguồn làn da nguyên bản không tỳ vết. Cam kết hiệu quả rõ rệt, an toàn tuyệt đối.</p>
+      </div>
+      <div>
+        <h5>Về Chúng Tôi</h5>
+        <ul>
+          <li><a href="index.html#home">Trang chủ</a></li>
+          <li><a href="index.html#about">Giới thiệu</a></li>
+          <li><a href="reviews.html">Đánh giá</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Dịch Vụ</h5>
+        <ul>
+          <li><a href="services.html">Điều trị mụn chuyên sâu</a></li>
+          <li><a href="services.html">Phác đồ trị nám</a></li>
+          <li><a href="services.html">Mesotherapy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Giờ Mở Cửa</h5>
+        <ul class="hours">
+          <li><span>T2 – T6</span><span>8:30 – 20:00</span></li>
+          <li><span>T7 – CN</span><span>8:00 – 21:00</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 La Bonita Spa. Thiết kế cao cấp chuyên nghiệp.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
 </body>
+
 </html>

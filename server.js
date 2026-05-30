@@ -60,14 +60,6 @@ db.serialize(() => {
         badge TEXT
     )`);
 
-    // Gallery
-    db.run(`CREATE TABLE IF NOT EXISTS gallery (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        image_url TEXT,
-        thumbnail_url TEXT,
-        alt_text TEXT
-    )`);
-
     // Reviews
     db.run(`CREATE TABLE IF NOT EXISTS reviews (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -104,7 +96,7 @@ db.serialize(() => {
     // -----------------------------------------
     // Seed Data (Only runs if tables are empty)
     // -----------------------------------------
-    
+
     // Default Admin
     db.get('SELECT * FROM users WHERE username = ?', ['admin'], (err, row) => {
         if (!row) {
@@ -117,14 +109,36 @@ db.serialize(() => {
     const defaultContent = {
         'hero_title': 'Nơi Phục Hồi<br><em>Làn Da Nguyên Bản</em>',
         'hero_desc': 'Hơn 10 năm kinh nghiệm điều trị mụn & nám chuyên sâu. Phác đồ cá nhân hóa, công nghệ tiên tiến, an toàn tuyệt đối.',
-        'about_title': 'Nâng Tầm Vẻ Đẹp<br>Chân Thực Của Bạn',
-        'about_desc': 'La Bonita Spa tự hào là địa chỉ điều trị mụn và nám uy tín với hơn 10 năm kinh nghiệm chuẩn y khoa, cam kết hiệu quả thật — giá trị thật.',
-        'contact_address': '123 Đường Sắc Đẹp, Quận 1, TP. Hồ Chí Minh',
+        // New CEO/About content
+        'ceo_subtitle': 'CHUYÊN GIA PHỤC HỒI DA CHUYÊN SÂU',
+        'ceo_title': '10+ Năm Kinh Nghiệm Chăm Sóc & Phục Hồi Da Chuyên Sâu',
+        'ceo_description': '<p class="ceo-desc">Với hơn 10 năm kinh nghiệm chuyên sâu trong lĩnh vực nám, mụn và phục hồi da, CEO Phạm Bảo Ngọc đã đồng hành cùng hàng ngàn khách hàng sở hữu làn da khó, da yếu và tổn thương lâu năm.</p><p class="ceo-desc">Chuyên xử lý các tình trạng nám đậm màu, mụn kéo dài và làn da suy yếu sau nhiều phương pháp không phù hợp, La Bonita Spa tập trung vào phục hồi cấu trúc da và tái tạo nền da khỏe mạnh từ bên trong, thay vì chỉ cải thiện trên bề mặt.</p><p class="ceo-desc">Mỗi liệu trình đều được cá nhân hóa theo tình trạng thực tế của da, ưu tiên sự an toàn, bền vững và nuôi dưỡng nền da khỏe từ gốc. Sau quá trình chăm sóc, làn da vẫn giữ được độ khỏe tự nhiên, hạn chế mỏng yếu, đỏ rát hay nhạy cảm.</p>',
+        'ceo_bullet1': 'Chuyên xử lý nám, mụn và da tổn thương lâu năm',
+        'ceo_bullet2': 'Phục hồi cấu trúc & tái tạo nền da chuyên sâu',
+        'ceo_bullet3': 'Liệu trình an toàn, ưu tiên nền da khỏe tự nhiên',
+        'ceo_bullet4': 'Hơn 10 năm kinh nghiệm thực chiến trong ngành chăm sóc da',
+        'ceo_quote': '“Làn da đẹp không chỉ là thay đổi vẻ ngoài, mà còn là sự tự tin và cảm giác yêu bản thân mỗi ngày.”',
+        'ceo_quote_author': '— CEO Phạm Bảo Ngọc',
+        'contact_address': '23 Lỗ Giáng 2, Hoà Xuân, Cẩm Lệ, Đà Nẵng',
         'contact_phone': '0988.xxx.xxx – 0912.xxx.xxx',
         'contact_hours': 'Thứ 2–6: 8:30–20:00 &nbsp;|&nbsp; T7–CN: 8:00–21:00'
     };
     for (const [key, value] of Object.entries(defaultContent)) {
         db.run('INSERT OR IGNORE INTO content (key, value) VALUES (?, ?)', [key, value]);
+    }
+    
+    // Force update CEO section to ensure changes are written even if db is already seeded
+    const forceCeoUpdates = {
+        'ceo_subtitle': defaultContent.ceo_subtitle,
+        'ceo_title': defaultContent.ceo_title,
+        'ceo_description': defaultContent.ceo_description,
+        'ceo_bullet1': defaultContent.ceo_bullet1,
+        'ceo_bullet2': defaultContent.ceo_bullet2,
+        'ceo_bullet3': defaultContent.ceo_bullet3,
+        'ceo_bullet4': defaultContent.ceo_bullet4
+    };
+    for (const [key, value] of Object.entries(forceCeoUpdates)) {
+        db.run('INSERT OR REPLACE INTO content (key, value) VALUES (?, ?)', [key, value]);
     }
 
     // Services Seed
@@ -142,26 +156,30 @@ db.serialize(() => {
         }
     });
 
-    // Gallery Seed
-    db.get('SELECT count(*) as count FROM gallery', (err, row) => {
-        if (row && row.count === 0) {
-            const defaultGallery = [
-                ['https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200&q=80', 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80', 'Spa interior'],
-                ['https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=1200&q=80', 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80', 'Treatment room'],
-                ['https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&q=80', 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80', 'Skincare']
-            ];
-            const stmt = db.prepare('INSERT INTO gallery (image_url, thumbnail_url, alt_text) VALUES (?, ?, ?)');
-            defaultGallery.forEach(g => stmt.run(g));
-            stmt.finalize();
-        }
-    });
-
     // Reviews Seed
     db.get('SELECT count(*) as count FROM reviews', (err, row) => {
         if (row && row.count === 0) {
             const defaultReviews = [
-                ['Hoàng Minh', 'Học sinh, 18 tuổi', 'Sau 2 tháng điều trị mụn viêm nang tại La Bonita, da mình sạch mụn 90%, không để lại sẹo rỗ.', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop', 5],
-                ['Thu Thủy', 'Nhân viên VP, 32 tuổi', 'Nám chân sâu sau sinh khiến mình trầm cảm. Nhờ liệu trình Laser mix Meso sau 3 tháng, giờ mình tự tin.', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop', 5]
+                ['Hoàng Minh', 'Học sinh, 18 tuổi', 'Sau 2 tháng điều trị mụn viêm nang tại La Bonita, da mình sạch mụn 90%, không để lại sẹo rỗ. Dù còn vài vết thâm nhỏ nhưng mình thấy hài lòng.', '', 5],
+                ['Thu Thủy', 'Nhân viên VP, 32 tuổi', 'Nám chân sâu sau sinh khiến mình trầm cảm. Nhờ liệu trình Laser mix Meso sau 3 tháng, da sáng lên thấy rõ, không còn tự ti nữa.', '', 5],
+                ['Thanh Hà', 'GV mầm non, 28 tuổi', 'Da mình cải thiện khá rõ sau vài buổi. Lúc đầu cũng hơi lo nhưng được tư vấn kỹ nên yên tâm hơn. Cảm ơn team.', '', 5],
+                ['Minh Tuấn', 'Kỹ sư CNTT, 26 tuổi', 'Mình bị mụn từ cấp 3, đi nhiều chỗ không khỏi. Ở đây làm kỹ, không bị ép mua thêm sản phẩm. Da đỡ dầu hẳn.', '', 5],
+                ['Phương Anh', 'Freelancer, 24 tuổi', 'Không gian yên tĩnh, thư giãn thật sự. Lấy nhân mụn nhẹ tay, không đau như mình nghĩ.', '', 5],
+                ['Kim Ngân', 'Nhân viên NH, 30 tuổi', 'Nhân viên tư vấn kỹ và nhẹ nhàng. Mình từng thử nhiều nơi nhưng ở đây khá ổn, giá hợp lý.', '', 5],
+                ['Hoàng Long', 'Sinh viên, 20 tuổi', 'Lần đầu đi spa nên hơi ngại, nhưng chị tư vấn viên rất thân thiện. Da mặt đỡ mụn hơn sau 1 tuần.', '', 5],
+                ['Bích Trâm', 'Nội trợ, 35 tuổi', 'Da nhạy cảm nên mình ngại đi spa. Ở đây dùng sản phẩm dịu nhẹ, không kích ứng. Sẽ quay lại.', '', 5],
+                ['Quốc Bảo', 'Nhân viên văn phòng, 27 tuổi', 'Mình ít khi viết đánh giá nhưng lần này thấy hài lòng. Da bớt đỏ và mụn giảm rõ sau 3 buổi.', '', 5],
+                ['Yến Nhi', 'Tiếp viên hàng không, 29 tuổi', 'Lịch trình bận rộn nên cần chỗ làm nhanh mà hiệu quả. La Bonita đáp ứng tốt, không mất nhiều thời gian.', '', 5],
+                ['Mỹ Linh', 'Nhà thiết kế, 31 tuổi', 'Cảm giác thư giãn ngay từ bước massage mặt. Da sau liệu trình mềm và sáng hơn hẳn.', '', 5],
+                ['Đức Huy', 'Kinh doanh tự do, 33 tuổi', 'Ban đầu mình cũng bán tín bán nghi nhưng làm xong thấy da thật sự khác. Sẽ giới thiệu bạn bè.', '', 5],
+                ['Ngọc Trâm', 'Sinh viên, 21 tuổi', 'Được tư vấn rất tận tình, không hề bị chèo kéo như mấy chỗ khác. Da cải thiện từ từ.', '', 5],
+                ['Anh Thư', 'Giáo viên, 29 tuổi', 'Kỹ thuật lấy nhân mụn nhẹ nhàng, không rát. Phòng sạch sẽ, thoáng mát. Hài lòng.', '', 5],
+                ['Văn Hải', 'Kỹ thuật viên, 25 tuổi', 'Mình bị mụn lưng, tưởng không làm được nhưng ở đây có dịch vụ luôn. Đỡ ngứa và mụn giảm.', '', 5],
+                ['Diễm My', 'Chuyên viên truyền thông, 27 tuổi', 'Đặt lịch nhanh, được nhắc lịch trước khi đến. Dịch vụ chuyên nghiệp, không phải chờ lâu.', '', 5],
+                ['Trọng Nhân', 'Nhân viên kỹ thuật, 30 tuổi', 'Da dầu mụn từ lâu, thử ở đây thấy ổn. Bác sĩ tư vấn dễ hiểu, không dùng từ chuyên môn khó.', '', 5],
+                ['Huyền My', 'Nhân viên sale, 23 tuổi', 'Phòng treatment nhìn sang trọng, sạch sẽ. Cảm giác như đang ở resort chứ không phải spa.', '', 5],
+                ['Khánh Vân', 'Content creator, 26 tuổi', 'Mình làm bên mảng làm đẹp nên khá kỹ tính. La Bonita làm tốt, sản phẩm dùng rõ ràng.', '', 5],
+                ['Thành Luân', 'Tài xế công nghệ, 28 tuổi', 'Vợ chở tới, lúc đầu ngại vì ít đàn ông đi spa. Nhưng vào làm xong thấy thoải mái, da mặt sạch hơn.', '', 5]
             ];
             const stmt = db.prepare('INSERT INTO reviews (customer_name, customer_details, review_text, avatar_url, rating) VALUES (?, ?, ?, ?, ?)');
             defaultReviews.forEach(r => stmt.run(r));
@@ -238,20 +256,16 @@ app.get('/api/services', (req, res) => {
     db.all('SELECT * FROM services', (err, rows) => handleDbResult(res, err, rows));
 });
 
-app.get('/api/gallery', (req, res) => {
-    db.all('SELECT * FROM gallery', (err, rows) => handleDbResult(res, err, rows));
-});
-
 app.get('/api/reviews', (req, res) => {
     db.all('SELECT * FROM reviews', (err, rows) => handleDbResult(res, err, rows));
 });
 
 app.post('/api/bookings', (req, res) => {
     const { name, phone, service, date, time } = req.body;
-    db.run(`INSERT INTO bookings (name, phone, service, date, time) VALUES (?, ?, ?, ?, ?)`, 
-        [name, phone, service, date, time], function(err) {
+    db.run(`INSERT INTO bookings (name, phone, service, date, time) VALUES (?, ?, ?, ?, ?)`,
+        [name, phone, service, date, time], function (err) {
             handleDbResult(res, err, { id: this.lastID }, 'Booking successful');
-    });
+        });
 });
 
 // ==========================
@@ -283,8 +297,8 @@ function makeCrudRoutes(tableName, columns) {
         const keys = columns.join(', ');
         const placeholders = columns.map(() => '?').join(', ');
         const values = columns.map(c => req.body[c]);
-        
-        db.run(`INSERT INTO ${tableName} (${keys}) VALUES (${placeholders})`, values, function(err) {
+
+        db.run(`INSERT INTO ${tableName} (${keys}) VALUES (${placeholders})`, values, function (err) {
             if (!err) logHistory(admin, 'CREATE', tableName, null, req.body);
             handleDbResult(res, err, { id: this.lastID });
         });
@@ -296,10 +310,10 @@ function makeCrudRoutes(tableName, columns) {
         const id = req.params.id;
         const sets = columns.map(c => `${c} = ?`).join(', ');
         const values = columns.map(c => req.body[c]);
-        
+
         db.get(`SELECT * FROM ${tableName} WHERE id = ?`, [id], (err, oldRow) => {
             if (err || !oldRow) return handleDbResult(res, err || new Error('Not found'));
-            db.run(`UPDATE ${tableName} SET ${sets} WHERE id = ?`, [...values, id], function(err) {
+            db.run(`UPDATE ${tableName} SET ${sets} WHERE id = ?`, [...values, id], function (err) {
                 if (!err) logHistory(admin, 'UPDATE', tableName, oldRow, req.body);
                 handleDbResult(res, err);
             });
@@ -312,7 +326,7 @@ function makeCrudRoutes(tableName, columns) {
         const id = req.params.id;
         db.get(`SELECT * FROM ${tableName} WHERE id = ?`, [id], (err, oldRow) => {
             if (err || !oldRow) return handleDbResult(res, err || new Error('Not found'));
-            db.run(`DELETE FROM ${tableName} WHERE id = ?`, [id], function(err) {
+            db.run(`DELETE FROM ${tableName} WHERE id = ?`, [id], function (err) {
                 if (!err) logHistory(admin, 'DELETE', tableName, oldRow, null);
                 handleDbResult(res, err);
             });
@@ -321,7 +335,6 @@ function makeCrudRoutes(tableName, columns) {
 }
 
 makeCrudRoutes('services', ['title', 'description', 'category', 'price', 'duration', 'image_url', 'badge']);
-makeCrudRoutes('gallery', ['image_url', 'thumbnail_url', 'alt_text']);
 makeCrudRoutes('reviews', ['customer_name', 'customer_details', 'review_text', 'avatar_url', 'rating']);
 makeCrudRoutes('bookings', ['name', 'phone', 'service', 'date', 'time', 'status']);
 

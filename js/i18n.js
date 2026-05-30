@@ -10,10 +10,8 @@ const i18n = {
         "exp_badge": "Chuẩn Y Khoa · Da Liễu",
         "years_exp": "<span class='num'>10+</span><span class='label'>Năm kinh nghiệm</span>",
         "happy_clients": "<span class='num'>1000+</span><span class='label'>Khách hài lòng</span>",
-        "positive_results": "<span class='num'>98%</span><span class='label'>Hiệu quả tích cực</span>",
-        "about_sub": "Về Chúng Tôi",
-        "about_ceo_role": "CEO · Chuyên gia Da Liễu Cao Cấp",
-        "about_ceo_desc": "Hơn một thập kỷ tận tâm đồng hành cùng hàng ngàn khách hàng tìm lại sự tự tin.",
+        "positive_results": "<span class='num'>98%</span><span class='label'>Hiệu quả tích cực</span>", // Giữ lại nếu được sử dụng ở nơi khác
+        "about_sub": "Về Chúng Tôi", // Giữ lại nếu được sử dụng ở nơi khác
         "booking_title": "Đặt Lịch Khám",
         "booking_desc": "Vui lòng để lại thông tin, chuyên viên của chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.",
         "name_placeholder": "Họ và tên của bạn",
@@ -39,10 +37,8 @@ const i18n = {
         "exp_badge": "Medical Standard · Dermatology",
         "years_exp": "<span class='num'>10+</span><span class='label'>Years Exp</span>",
         "happy_clients": "<span class='num'>1000+</span><span class='label'>Happy Clients</span>",
-        "positive_results": "<span class='num'>98%</span><span class='label'>Positive Results</span>",
-        "about_sub": "About Us",
-        "about_ceo_role": "CEO · Senior Dermatologist",
-        "about_ceo_desc": "Over a decade dedicated to helping thousands of clients regain their confidence.",
+        "positive_results": "<span class='num'>98%</span><span class='label'>Positive Results</span>", // Giữ lại nếu được sử dụng ở nơi khác
+        "about_sub": "About Us", // Giữ lại nếu được sử dụng ở nơi khác
         "booking_title": "Book an Appointment",
         "booking_desc": "Please leave your information, our specialist will contact you shortly.",
         "name_placeholder": "Your Full Name",
@@ -67,27 +63,27 @@ function changeLanguage(lang) {
         const key = el.getAttribute('data-i18n');
         if (i18n[lang][key]) {
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
-                if(el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'tel')) {
+                if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'tel')) {
                     el.placeholder = i18n[lang][key];
-                } else if(el.tagName === 'SELECT') {
+                } else if (el.tagName === 'SELECT') {
                     // special case for select first option
-                    if(el.options[0] && el.options[0].value === '') el.options[0].text = i18n[lang][key];
+                    if (el.options[0] && el.options[0].value === '') el.options[0].text = i18n[lang][key];
                 }
             } else {
                 el.innerHTML = i18n[lang][key];
             }
         }
     });
-    
+
     // Update active state of lang switcher
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     const btn = document.getElementById('lang_' + lang);
-    if(btn) btn.classList.add('active');
+    if (btn) btn.classList.add('active');
 
     // Update select options translations (since they are children of select)
     document.querySelectorAll('option[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if(i18n[lang][key]) el.text = i18n[lang][key];
+        if (i18n[lang][key]) el.text = i18n[lang][key];
     });
 }
 
